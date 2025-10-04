@@ -11,10 +11,11 @@ echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 locale-gen
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
 
+read -p "Enter your hostname: " hostname
 echo "==> Hostname"
-echo "seiza" > /etc/hostname
-if ! grep -q "127.0.0.1 seiza.localdomain seiza" /etc/hosts; then
-    echo "127.0.0.1 seiza.localdomain seiza" >> /etc/hosts
+echo "$hostname" > /etc/hostname
+if ! grep -q "127.0.0.1 $hostname.localdomain $hostname" /etc/hosts; then
+    echo "127.0.0.1 $hostname.localdomain $hostname" >> /etc/hosts
 fi
 
 echo "==> Setup password for root"
@@ -78,13 +79,13 @@ echo "==> Install KDE and Apps"
 pacman -S --noconfirm \
     plasma-meta \
     sddm sddm-kcm \
-    konsole dolphin dolphin-plugins spectacle ark gwenview kalk kate okular \
-    flatpak pacman-contrib system-config-printer \
+    konsole dolphin dolphin-plugins spectacle ark gwenview kalk kate jq okular \
+    flatpak pacman-contrib kvantum-qt5 system-config-printer \
     pipewire pipewire-audio pipewire-alsa pipewire-jack wireplumber \
     bluez bluez-utils bluedevil \
     powerdevil power-profiles-daemon \
     ufw ufw-extras \
-    kvantum-qt5 fastfetch fish \
+    fastfetch fish wget curl \
     fcitx5-im fcitx5-configtool fcitx5-unikey \
     ttf-roboto ttf-dejavu ttf-liberation ttf-jetbrains-mono \
     noto-fonts noto-fonts-cjk noto-fonts-emoji \
@@ -98,6 +99,6 @@ systemctl enable systemd-timesyncd
 systemctl enable docker
 systemctl enable fstrim.timer
 
-usermod -aG docker licons
+usermod -aG docker $username
 
 echo "==> Install KDE and Apps completed!"

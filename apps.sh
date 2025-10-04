@@ -2,18 +2,25 @@
 
 set -e
 
+fish
+chsh -s /usr/bin/fish
+
+git config --global credential.helper store
+echo "" > ~/.git-credentials
+
 cd /tmp
 git clone https://aur.archlinux.org/yay
 cd yay
 makepkg -si --noconfirm
-cd /tmp/arch-kde
 
 # Cập nhật hệ thống
+cd /tmp/arch-kde
 yay -Syu --noconfirm
 
 # Cài các phần mềm khác
 echo "==> Cài đặt phần mềm"
 yay -S --noconfirm \
+  kf6-servicemenus-rootactions \
   tela-circle-icon-theme \
   zen-browser-bin \
   nodejs npm jdk-openjdk \
@@ -25,13 +32,14 @@ yay -S --noconfirm \
   dbeaver \
   postman-bin \
   appimagelauncher \
-  rclone
+  rclone \
+  unrar \
+  ttf-ms-fonts
 
 echo "==> Cấu hình fcitx5 trong ~/.xprofile"
 
 if ! grep -q "GTK_IM_MODULE=fcitx" ~/.xprofile 2>/dev/null; then
 cat << 'EOF' >> ~/.xprofile
-
 # Fcitx5 input method
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
@@ -53,6 +61,9 @@ set -gx PATH \$PATH /home/$username/.dotnet/tools
 EOF
 sudo cp -fr ./fish ~/.config/
 
+echo "Copy widgets"
+cp -fr ./widgets/org.kde.plasma.taskmanager/ ~/.local/share/plasma/plasmoids/
+
 echo "Copy Kvantum"
 sudo tar -xJf ./Kvantum/Layan.tar.xz -C /usr/share/Kvantum/
 sudo tar -xJf ./Kvantum/Layan-solid.tar.xz -C /usr/share/Kvantum/
@@ -71,8 +82,12 @@ sudo ln -sf /usr/share/dotnet/dotnet /usr/bin/dotnet
 dotnet --info
 dotnet tool update -g linux-dev-certs
 dotnet linux-dev-certs install
-dotnet dev-certs https --trust
+#dotnet dev-certs https --trust
 
-git config --global credential.helper store
+dotnet tool install -g dotnet-ef
+dotnet tool install -g dotnet-sonarscanner
+
+sudo npm install @openapitools/openapi-generator-cli -g
+sudo openapi-generator-cli version-manager set 7.15.0
 
 echo "Hoàn tất cài đặt Ứng dụng!"
