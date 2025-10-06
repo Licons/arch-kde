@@ -62,7 +62,8 @@ EOF
 sudo cp -fr ./fish ~/.config/
 
 echo "Copy widgets"
-cp -fr ./widgets/org.kde.plasma.taskmanager/ ~/.local/share/plasma/plasmoids/
+cp -frv /usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/ ~/.local/share/plasma/plasmoids/
+cp -fv ./widgets/org.kde.plasma.taskmanager/Task.qml ~/.local/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/ui/
 
 echo "Copy Kvantum"
 sudo tar -xJf ./Kvantum/Layan.tar.xz -C /usr/share/Kvantum/
