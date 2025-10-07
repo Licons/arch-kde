@@ -43,7 +43,7 @@ fi
 
 echo "Copy cấu hình Fish"
 read -p "Enter your username: " username
-cat <<EOF > ./fish/config.fish
+cat <<EOF > ~/.config/fish/config.fish
 if status is-interactive
     fastfetch
 end
@@ -52,7 +52,16 @@ set -g fish_greeting
 set -x DOTNET_CLI_TELEMETRY_OPTOUT 1
 set -gx PATH \$PATH /home/$username/.dotnet/tools
 EOF
-sudo cp -fr ./fish ~/.config/
+mkdir -p ~/.config/fish/functions
+cat <<EOF > ~/.config/fish/functions/fish_prompt.fish
+function fish_prompt
+    set_color cyan
+    echo (pwd)
+    set_color green
+    echo -n '> '
+    set_color normal
+end
+EOF
 
 echo "Copy widgets"
 cp -frv /usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/ ~/.local/share/plasma/plasmoids/
