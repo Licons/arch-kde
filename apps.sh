@@ -21,23 +21,16 @@ yay -Syu --noconfirm
 echo "==> Cài đặt phần mềm"
 yay -S --noconfirm \
   kf6-servicemenus-rootactions \
-  tela-circle-icon-theme \
-  zen-browser-bin \
-  nodejs npm jdk-openjdk \
-  onedrive onedrivegui \
-  vlc \
+  zen-browser-bin vlc \
   libreoffice-fresh \
-  teams-for-linux \
-  rider \
-  dbeaver \
-  postman-bin \
+  nodejs npm jdk-openjdk \
+  onedrive onedrivegui teams-for-linux \
+  rider dbeaver postman-bin \
   appimagelauncher \
   rclone \
-  unrar \
   ttf-ms-fonts
 
 echo "==> Cấu hình fcitx5 trong ~/.xprofile"
-
 if ! grep -q "GTK_IM_MODULE=fcitx" ~/.xprofile 2>/dev/null; then
 cat << 'EOF' >> ~/.xprofile
 # Fcitx5 input method
@@ -64,6 +57,7 @@ sudo cp -fr ./fish ~/.config/
 echo "Copy widgets"
 cp -frv /usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/ ~/.local/share/plasma/plasmoids/
 cp -fv ./widgets/org.kde.plasma.taskmanager/Task.qml ~/.local/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/ui/
+cp -frv ./cursors/* ~/.icons/
 
 echo "Copy Kvantum"
 sudo tar -xJf ./Kvantum/Layan.tar.xz -C /usr/share/Kvantum/
@@ -81,9 +75,9 @@ sudo tar -xzf ~/Downloads/dotnet-sdk-8.0.414-linux-x64.tar.gz -C /usr/share/dotn
 sudo ln -sf /usr/share/dotnet/dotnet /usr/bin/dotnet
 
 dotnet --info
-dotnet tool update -g linux-dev-certs
-dotnet linux-dev-certs install
-#dotnet dev-certs https --trust
+# dotnet tool update -g linux-dev-certs
+# dotnet linux-dev-certs install
+dotnet dev-certs https --trust
 
 dotnet tool install -g dotnet-ef
 dotnet tool install -g dotnet-sonarscanner

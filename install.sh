@@ -7,9 +7,13 @@ timedatectl set-timezone Asia/Ho_Chi_Minh
 timedatectl set-ntp true
 
 echo "==> Configure locale"
-echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+if ! grep -q "en_US.UTF-8 UTF-8" /etc/locale.gen; then
+    echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+fi
 locale-gen
-echo "LANG=en_US.UTF-8" > /etc/locale.conf
+if ! grep -q "LANG=en_US.UTF-8" /etc/locale.conf; then
+    echo "LANG=en_US.UTF-8" > /etc/locale.conf
+fi
 
 read -p "Enter your hostname: " hostname
 echo "==> Hostname"
@@ -29,16 +33,20 @@ passwd "$username"
 echo "==> Setup wheel"
 EDITOR=nano visudo
 
-echo "==> Open /etc/pacman.conf uncomment [multilib] và Include"
-nano /etc/pacman.conf
+echo "==> Update /etc/pacman.conf"
+sed -i '/^\#\[multilib\]/{n;s/^#Include = \/etc\/pacman\.d\/mirrorlist/Include = \/etc\/pacman\.d\/mirrorlist/;s/^#//}' /etc/pacman.conf
+sed -i 's/^#\[multilib\]/\[multilib\]/' /etc/pacman.conf
 
-echo "==> Update pacman"
-pacman -Syu --noconfirm pacman
+echo "==> Update system"
+pacman -Syu --noconfirm
 
-echo "==> Open /etc/mkinitcpio.d/linux.preset"
-echo "===> Update PRESETS=('default')"
-echo "===> #fallback"
-nano /etc/mkinitcpio.d/linux.preset
+echo "==> Update /etc/mkinitcpio.d/linux.preset"
+sed -i \
+    -e "s|^PRESETS=('default' 'fallback')|PRESETS=('default')|" \
+    -e 's|^fallback_image=|#fallback_image=|' \
+    -e 's|^fallback_options=|#fallback_options=|' \
+    /etc/mkinitcpio.d/linux.preset
+
 rm -f /boot/initramfs-linux-fallback.img
 mkinitcpio -P
 
@@ -52,24 +60,27 @@ cd grub2-themes
 ./install.sh -t tela
 cd /
 
-echo "==> Config GRUB"
-echo "GRUB_DEFAULT=saved"
-echo "GRUB_TIMEOUT=2"
-echo "GRUB_DISABLE_OS_PROBER=false"
-echo "GRUB_DISABLE_SUBMENU=y"
-echo "GRUB_DISABLE_RECOVERY=true"
-nano /etc/default/grub
+echo "==> Update GRUB"
+sed -i \
+    -e "s|^GRUB_DEFAULT=.*|GRUB_DEFAULT=saved|" \
+    -e "s|^GRUB_TIMEOUT=.*|GRUB_TIMEOUT=2|" \
+    -e "s|^#GRUB_DISABLE_RECOVERY=.*|GRUB_DISABLE_RECOVERY=true|" \
+    -e "s|^#GRUB_SAVEDEFAULT=.*|GRUB_SAVEDEFAULT=true|" \
+    -e "s|^#GRUB_DISABLE_SUBMENU=.*|GRUB_DISABLE_SUBMENU=y|" \
+    -e "s|^#GRUB_DISABLE_OS_PROBER=.*|GRUB_DISABLE_OS_PROBER=false|" \
+    /etc/default/grub
 
 chmod -x /etc/grub.d/30_uefi-firmware
 grub-mkconfig -o /boot/grub/grub.cfg
 
 echo "==> Install ArchLinux completed!"
 
+echo
 
 echo "==> Install NVIDIA driver"
 pacman -S --noconfirm \
     nvidia-dkms nvidia-utils nvidia-settings \
-    lib32-nvidia-utils lib32-opencl-nvidia
+    lib32-nvidia-utils vulkan-icd-loader lib32-vulkan-icd-loader
 
 echo "options nvidia-drm modeset=1" > /etc/modprobe.d/nvidia.conf
 echo "blacklist nouveau" > /etc/modprobe.d/blacklist-nouveau.conf
@@ -85,7 +96,7 @@ pacman -S --noconfirm \
     bluez bluez-utils bluedevil \
     powerdevil power-profiles-daemon \
     ufw ufw-extras \
-    fastfetch fish wget curl \
+    fastfetch fish wget curl unrar \
     fcitx5-im fcitx5-configtool fcitx5-unikey \
     ttf-roboto ttf-dejavu ttf-liberation ttf-jetbrains-mono \
     noto-fonts noto-fonts-cjk noto-fonts-emoji \
