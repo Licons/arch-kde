@@ -11,9 +11,8 @@ if ! grep -q "en_US.UTF-8 UTF-8" /etc/locale.gen; then
     echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 fi
 locale-gen
-if ! grep -q "LANG=en_US.UTF-8" /etc/locale.conf; then
-    echo "LANG=en_US.UTF-8" > /etc/locale.conf
-fi
+echo "LANG=en_US.UTF-8" > /etc/locale.conf
+
 
 read -p "Enter your hostname: " hostname
 echo "==> Hostname"

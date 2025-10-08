@@ -2,7 +2,6 @@
 
 set -e
 
-fish
 chsh -s /usr/bin/fish
 
 git config --global credential.helper store
@@ -64,7 +63,7 @@ end
 EOF
 
 echo "Copy widgets"
-cp -frv /usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/ ~/.local/share/plasma/plasmoids/
+cp -frv /usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/ ~/.local/share/plasma/plasmoids/org.kde.plasma.taskmanager/
 cp -fv ./widgets/org.kde.plasma.taskmanager/Task.qml ~/.local/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/ui/
 cp -frv ./cursors/* ~/.icons/
 
@@ -91,7 +90,8 @@ dotnet dev-certs https --trust
 dotnet tool install -g dotnet-ef
 dotnet tool install -g dotnet-sonarscanner
 
-sudo npm install @openapitools/openapi-generator-cli -g
-sudo openapi-generator-cli version-manager set 7.15.0
+sudo npm i -g bash-language-server
+sudo npm i -g @openapitools/openapi-generator-cli
+sudo openapi-generator-cli version-manager set 7.14.0
 
 echo "Hoàn tất cài đặt Ứng dụng!"
