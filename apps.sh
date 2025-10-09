@@ -2,10 +2,14 @@
 
 set -e
 
+read -p "Enter your username: " username
 chsh -s /usr/bin/fish
 
 git config --global credential.helper store
-echo "" > ~/.git-credentials
+cat <<EOF > ~/.git-credentials
+https://TripOTAEcoSys@dev.azure.com
+https://licons@github.com
+EOF
 
 cd /tmp
 git clone https://aur.archlinux.org/yay
@@ -41,7 +45,6 @@ EOF
 fi
 
 echo "Copy cấu hình Fish"
-read -p "Enter your username: " username
 cat <<EOF > ~/.config/fish/config.fish
 if status is-interactive
     fastfetch
