@@ -15,10 +15,11 @@ echo "LANG=en_US.UTF-8" > /etc/locale.conf
 
 
 read -p "Enter your hostname: " hostname
+read -p "Enter your domain " hostname
 echo "==> Hostname"
 echo "$hostname" > /etc/hostname
-if ! grep -q "127.0.0.1 $hostname.localdomain $hostname" /etc/hosts; then
-    echo "127.0.0.1 $hostname.localdomain $hostname" >> /etc/hosts
+if ! grep -q "127.0.0.1 $hostname.$domain $hostname" /etc/hosts; then
+    echo "127.0.0.1 $hostname.$domain $hostname" >> /etc/hosts
 fi
 
 echo "==> Setup password for root"
