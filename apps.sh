@@ -86,8 +86,8 @@ sudo tar -xzf ~/Downloads/dotnet-sdk-8.0.414-linux-x64.tar.gz -C /usr/share/dotn
 sudo ln -sf /usr/share/dotnet/dotnet /usr/bin/dotnet
 
 dotnet --info
-# dotnet tool update -g linux-dev-certs
-# dotnet linux-dev-certs install
+dotnet tool update -g linux-dev-certs
+dotnet linux-dev-certs install
 dotnet dev-certs https --trust
 
 dotnet tool install -g dotnet-ef
