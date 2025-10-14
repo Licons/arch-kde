@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+read -p "Enter your hostname: " hostname
+read -p "Enter your domain: " domain
+read -p "Enter your username: " username
+
 echo "==> Setup timezone"
 ln -sf /usr/share/zoneinfo/Asia/Ho_Chi_Minh /etc/localtime
 timedatectl set-timezone Asia/Ho_Chi_Minh
@@ -13,9 +17,6 @@ fi
 locale-gen
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
 
-
-read -p "Enter your hostname: " hostname
-read -p "Enter your domain: " domain
 echo "==> Hostname"
 echo "$hostname" > /etc/hostname
 if ! grep -q "127.0.0.1 $hostname.$domain $hostname" /etc/hosts; then
@@ -25,9 +26,8 @@ fi
 echo "==> Setup password for root"
 passwd
 
-read -p "Enter your username: " username
-echo "==> Create and setup password for user: $username"
 useradd -mG wheel "$username"
+echo "==> Create and setup password for user: $username"
 passwd "$username"
 
 echo "==> Setup wheel"
