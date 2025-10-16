@@ -75,9 +75,11 @@ sudo cp -frv ./Kvantum/* /usr/share/Kvantum/
 
 echo
 echo "==> Cài đặt DOTNET"
-wget -P ~/Downloads https://builds.dotnet.microsoft.com/dotnet/Sdk/8.0.414/dotnet-sdk-8.0.414-linux-x64.tar.gz
+wget -P ~/Downloads https://builds.dotnet.microsoft.com/dotnet/Sdk/8.0.415/dotnet-sdk-8.0.415-linux-x64.tar.gz
+wget -P ~/Downloads https://builds.dotnet.microsoft.com/dotnet/Sdk/9.0.306/dotnet-sdk-9.0.306-linux-x64.tar.gz
 sudo mkdir -p /usr/share/dotnet
-sudo tar -xzf ~/Downloads/dotnet-sdk-8.0.414-linux-x64.tar.gz -C /usr/share/dotnet/
+sudo tar -xzf ~/Downloads/dotnet-sdk-8.0.415-linux-x64.tar.gz -C /usr/share/dotnet/
+sudo tar -xzf ~/Downloads/dotnet-sdk-9.0.306-linux-x64.tar.gz -C /usr/share/dotnet/
 sudo ln -sf /usr/share/dotnet/dotnet /usr/bin/dotnet
 
 echo
