@@ -99,7 +99,7 @@ set -gx PATH \$PATH /home/$username/.dotnet/tools
 EOF
 
 mkdir -p ~/.config/fish
-cp -frv ./fish/ ~/.config/fish/
+cp -frv ./fish/* ~/.config/fish/
 
 echo
 echo
