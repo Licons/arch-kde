@@ -100,6 +100,8 @@ EOF
 
 mkdir -p ~/.config/fish
 cp -frv ./fish/* ~/.config/fish/
+exit
+fish
 
 echo
 echo
