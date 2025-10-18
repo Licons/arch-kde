@@ -2,7 +2,6 @@
 
 set -e
 
-fish
 read -p "Enter your username: " username
 
 chsh -s /usr/bin/fish
@@ -100,8 +99,6 @@ EOF
 
 mkdir -p ~/.config/fish
 cp -frv ./fish/* ~/.config/fish/
-exit
-fish
 
 echo
 echo
@@ -111,8 +108,7 @@ echo "##################################################"
 echo
 echo
 
-mkdir -p ~/.local/share/plasma/plasmoids/org.kde.plasma.taskmanager
-cp -frv /usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/ ~/.local/share/plasma/plasmoids/org.kde.plasma.taskmanager/
+cp -frv /usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/ ~/.local/share/plasma/plasmoids/
 cp -fv ./plasmoids/org.kde.plasma.taskmanager/Task.qml ~/.local/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/ui/
 
 mkdir -p ~/.icons
