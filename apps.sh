@@ -10,6 +10,8 @@ echo "##################################################"
 echo
 echo
 
+git config --global user.name "Licons Chou"
+git config --global user.email "liconschou@gmail.com"
 git config --global credential.helper store
 cat <<EOF > ~/.git-credentials
 https://TripOTAEcoSys@dev.azure.com
