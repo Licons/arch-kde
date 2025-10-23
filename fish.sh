@@ -28,4 +28,45 @@ mkdir -p ~/.config/fish
 cp -frv ./fish/* ~/.config/fish/
 
 echo
+echo
+echo "##################################################"
+echo "###            CONFIGURE FCITX                 ###"
+echo "##################################################"
+echo
+echo
+
+cat <<EOF > ~/.xprofile
+# Fcitx5 input method
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS="@im=fcitx"
+export INPUT_METHOD=fcitx
+EOF
+
+echo
+echo
+echo "##################################################"
+echo "###          CONFIGURE PLASMOIDS               ###"
+echo "##################################################"
+echo
+echo
+
+mkdir -p ~/.local/share/plasma/plasmoids/org.kde.plasma.taskmanager/
+cp -frv /usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/* ~/.local/share/plasma/plasmoids/org.kde.plasma.taskmanager/
+cp -fv ./plasmoids/org.kde.plasma.taskmanager/Task.qml ~/.local/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/ui/Task.qml
+
+mkdir -p ~/.icons
+cp -frv ./cursors/* ~/.icons/
+
+echo
+echo
+echo "##################################################"
+echo "###          CONFIGURE KVANTUM                 ###"
+echo "##################################################"
+echo
+echo
+
+sudo cp -frv ./Kvantum/* /usr/share/Kvantum/
+
+echo
 echo "### DONE ###"
