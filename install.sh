@@ -129,10 +129,10 @@ cd /tmp
 git clone https://github.com/vinceliuice/grub2-themes.git
 cd grub2-themes
 ./install.sh -t tela
-cd /
 
 echo
 echo "==> Update GRUB"
+cd /
 sed -i \
     -e "s|^GRUB_DEFAULT=.*|GRUB_DEFAULT=saved|" \
     -e "s|^GRUB_TIMEOUT=.*|GRUB_TIMEOUT=2|" \
@@ -142,6 +142,7 @@ sed -i \
     -e "s|^#GRUB_DISABLE_OS_PROBER=.*|GRUB_DISABLE_OS_PROBER=false|" \
     /etc/default/grub
 
+cp -fv /tmp/arch-kde/pictures/background.jpg /usr/share/grub/themes/tela/background.jpg
 chmod -x /etc/grub.d/30_uefi-firmware
 grub-mkconfig -o /boot/grub/grub.cfg
 

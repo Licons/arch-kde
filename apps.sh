@@ -5,22 +5,6 @@ set -e
 echo
 echo
 echo "##################################################"
-echo "###              SETUP GIT CRED                ###"
-echo "##################################################"
-echo
-echo
-
-git config --global user.name "Licons Chou"
-git config --global user.email "liconschou@gmail.com"
-git config --global credential.helper store
-cat <<EOF > ~/.git-credentials
-https://TripOTAEcoSys@dev.azure.com
-https://licons@github.com
-EOF
-
-echo
-echo
-echo "##################################################"
 echo "###                SETUP YAY                   ###"
 echo "##################################################"
 echo
@@ -51,6 +35,7 @@ echo
 echo
 
 yay -S --noconfirm \
+  tela-circle-icon-theme \
   kf6-servicemenus-rootactions \
   zen-browser-bin vlc \
   libreoffice-fresh \

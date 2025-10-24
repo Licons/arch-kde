@@ -46,6 +46,22 @@ EOF
 echo
 echo
 echo "##################################################"
+echo "###          CONFIGURE GIT CRED                ###"
+echo "##################################################"
+echo
+echo
+
+git config --global user.name "Licons Chou"
+git config --global user.email "liconschou@gmail.com"
+git config --global credential.helper store
+cat <<EOF > ~/.git-credentials
+https://TripOTAEcoSys@dev.azure.com
+https://licons@github.com
+EOF
+
+echo
+echo
+echo "##################################################"
 echo "###          CONFIGURE PLASMOIDS               ###"
 echo "##################################################"
 echo
@@ -55,8 +71,19 @@ mkdir -p ~/.local/share/plasma/plasmoids/org.kde.plasma.taskmanager/
 cp -frv /usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/* ~/.local/share/plasma/plasmoids/org.kde.plasma.taskmanager/
 cp -fv ./plasmoids/org.kde.plasma.taskmanager/Task.qml ~/.local/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/ui/Task.qml
 
+echo
+echo
+echo "##################################################"
+echo "###          CONFIGURE THEMES                  ###"
+echo "##################################################"
+echo
+echo
+
 mkdir -p ~/.icons
 cp -frv ./cursors/* ~/.icons/
+
+mkdir -p ~/.themes
+cp -frv ./themes/* ~/.themes/
 
 echo
 echo
